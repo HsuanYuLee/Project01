@@ -119,21 +119,21 @@ public class MainActivity extends AppCompatActivity
     private List getStorelist()
     {
         List<Store> Storelist = new ArrayList<>();
-
         int i = 1;
+
         do
         {
 
             int StoreImageId = getResources().
                     getIdentifier("store" + i, "drawable", this.getPackageName());
             int StoreNameId = getResources().
-                    getIdentifier("Name" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Name" + i, "string", this.getPackageName());
             int StoreAddressId = getResources().
-                    getIdentifier("Address" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Address" + i, "string", this.getPackageName());
             int StoreTimeId = getResources().
-                    getIdentifier("Time" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Time" + i, "string", this.getPackageName());
             int StorePhoneId = getResources().
-                    getIdentifier("Phone" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Phone" + i, "string", this.getPackageName());
 
             Storelist.add(new Store(
                     StoreImageId,

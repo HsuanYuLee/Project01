@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Bento1_Name1">招牌燒肉飯</string>
+    <string name="Bento1_Price1">90</string>
+    <string name="Bento1_Name2">澎湖花枝排飯</string>
+    <string name="Bento1_Price2">100</string>
+    <string name="Bento1_Name3">招牌雞腿飯</string>
+    <string name="Bento1_Price3">100</string>
+    <string name="Bento1_Name4">澎湖蝦捲飯</string>
+    <string name="Bento1_Price4">100</string>
+
+</resources>
