@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Name1">洪元讚燒肉飯 中埔便當店</string>
+    <string name="Address1">桃園市桃園區中埔一街340號</string>
+    <string name="Time1">11:00–14:00, 16:30–20:00</string>
+    <string name="Phone1">03 3021611</string>
+
+    <string name="Name2">𡘙師傅便當專賣店-桃園店</string>
+    <string name="Address2">桃園市桃園區南華街152號</string>
+    <string name="Time2">10:00–20:00</string>
+    <string name="Phone2">03 3472222</string>
+
+    <string name="Name3">正一排骨</string>
+    <string name="Address3">桃園市桃園區中正路730號</string>
+    <string name="Time3">10:30–20:30</string>
+    <string name="Phone3">03 3556165</string>
+
+    <string name="Name4">台灣火車頭鐵路便當中山店</string>
+    <string name="Address4">桃園市桃園區中山路20號</string>
+    <string name="Time4">11:00–21:00</string>
+    <string name="Phone4">03 3350290</string>
+
+    <string name="Name5">好味池上便當</string>
+    <string name="Address5">桃園區健行路22號</string>
+    <string name="Time5">10:30–14:30, 16:30–20:00</string>
+    <string name="Phone5">03 3166559</string>
+
+
+</resources>

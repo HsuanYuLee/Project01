@@ -1,8 +1,6 @@
 package com.example.user.project01;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +27,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-
         ListView lvStore = findViewById(R.id.StoreList);
         List storelist = getStorelist();
 
@@ -40,7 +37,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-
 
             }
         });
@@ -83,7 +79,7 @@ public class MainActivity extends AppCompatActivity
             if(itemView == null)
             {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
-                itemView = layoutInflater.inflate(R.layout.item, parent, false);
+                itemView = layoutInflater.inflate(R.layout.storelist, parent, false);
             }
 
             Store Store = (MainActivity.Store) Storelist.get(position);
@@ -123,36 +119,31 @@ public class MainActivity extends AppCompatActivity
     private List getStorelist()
     {
         List<Store> Storelist = new ArrayList<>();
-        Storelist.add(new Store(
-                 R.drawable.store01,
-                "洪元讚燒肉飯 中埔便當店",
-                "地址：33076桃園市桃園區中埔一街340號",
-                "營業時間：11:00–14:00, 16:30–20:00",
-                "電話：03 3021611"));
-        Storelist.add(new Store(
-                R.drawable.store02,
-                "\uD845\uDE19師傅便當專賣店-桃園店",
-                "地址：330桃園市桃園區南華街152號",
-                "營業時間：10:00–20:00",
-                "電話：03 3472222"));
-        Storelist.add(new Store(
-                R.drawable.store03,
-                "正一排骨",
-                "地址：330桃園市桃園區中正路730號",
-                "營業時間：10:30–20:30",
-                "電話：03 3556165"));
-        Storelist.add(new Store(
-                R.drawable.store04,
-                "台灣火車頭鐵路便當中山店",
-                "地址：330桃園市桃園區中山路20號",
-                "營業時間：11:00–21:00",
-                "電話：03 3350290"));
-        Storelist.add(new Store(
-                R.drawable.store05,
-                "好味池上便當",
-                "地址：桃園區健行路22號",
-                "營業時間：10:30–14:30, 16:30–20:00",
-                "電話：03 3166559"));
+
+        int i = 1;
+        do
+        {
+
+            int StoreImageId = getResources().
+                    getIdentifier("store" + i, "drawable", this.getPackageName());
+            int StoreNameId = getResources().
+                    getIdentifier("Name" + i, "string", this.getPackageName());
+            int StoreAddressId = getResources().
+                    getIdentifier("Address" + i, "string", this.getPackageName());
+            int StoreTimeId = getResources().
+                    getIdentifier("Time" + i, "string", this.getPackageName());
+            int StorePhoneId = getResources().
+                    getIdentifier("Phone" + i, "string", this.getPackageName());
+
+            Storelist.add(new Store(
+                    StoreImageId,
+                    getString(StoreNameId),
+                    "地址：" + getString(StoreAddressId),
+                    "營業時間：" + getString(StoreTimeId),
+                    "電話：" + getString(StorePhoneId)));
+            i++;
+
+        }while(getResources().getIdentifier("store" + i, "drawable", this.getPackageName()) != 0);
 
 
         return Storelist;

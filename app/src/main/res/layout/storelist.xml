@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="2dp"
+        android:orientation="horizontal"
+        android:background="#C63300"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/StoreImage"
+            android:layout_width="240dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Style02"
+                android:id="@+id/Name"
+                android:text="@string/Name" />
+
+            <TextView
+                style="@style/Style02"
+                android:id="@+id/Address"
+                android:text="@string/Address" />
+
+            <TextView
+                style="@style/Style02"
+                android:id="@+id/Time"
+                android:text="@string/Time" />
+
+            <TextView
+                style="@style/Style02"
+                android:id="@+id/Phone"
+                android:text="@string/Phone" />
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
