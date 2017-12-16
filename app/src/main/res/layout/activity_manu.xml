@@ -8,7 +8,7 @@
     tools:context="com.example.user.project01.ManuActivity">
 
     <TextView
-        android:id="@+id/title2"
+        android:id="@+id/Title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="請選擇便當"
