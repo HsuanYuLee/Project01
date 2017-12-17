@@ -65,7 +65,7 @@ public class ManuActivity extends AppCompatActivity
             if(itemView == null)
             {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
-                itemView = layoutInflater.inflate(R.layout.storelist, parent, false);
+                itemView = layoutInflater.inflate(R.layout.bentolist, parent, false);
             }
 
             Bento Bento = (ManuActivity.Bento) Bentolist.get(position);
@@ -86,7 +86,6 @@ public class ManuActivity extends AppCompatActivity
         {
             return Bentolist.get(Position);
         }
-
         public long getItemId(int Position)
         {
             return 0;
@@ -95,28 +94,30 @@ public class ManuActivity extends AppCompatActivity
 
     private List getBentolist()
     {
+        Bundle bundle = getIntent().getExtras();
+        int Id = bundle.getInt("ID");
+
         List<Bento> Bentolist = new ArrayList<>();
         int i = 1;
 
         do
             {
                 int BentoImageId = getResources().
-                        getIdentifier("store" +1+ "_manu" +i, "drawable", this.getPackageName());
+                        getIdentifier("store" +Id+ "_manu" +i, "drawable", this.getPackageName());
                 int BentoNameId = getResources().
-                        getIdentifier("Bento" +1+ "_Name" +i, "string", this.getPackageName());
+                        getIdentifier("Bento" +Id+ "_Name" +i, "string", this.getPackageName());
                 int BentoPriceId = getResources().
-                        getIdentifier("Bento" +1+ "_Price" +i, "string", this.getPackageName());
+                        getIdentifier("Bento" +Id+ "_Price" +i, "string", this.getPackageName());
 
                 Bentolist.add(new Bento(
                         BentoImageId,
                         getString(BentoNameId),
-                        "價格：" + getString(BentoNameId)));
+                        getString(BentoPriceId) + "元"));
 
                 i++;
 
-            }while(getResources().getIdentifier("store" +1+ "_manu" +i, "drawable", this.getPackageName()) != 0);
+            }while(getResources().getIdentifier("store" +Id+ "_manu" +i, "drawable", this.getPackageName()) != 0);
 
         return Bentolist;
     }
-
 }

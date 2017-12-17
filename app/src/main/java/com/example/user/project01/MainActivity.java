@@ -1,9 +1,13 @@
 package com.example.user.project01;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,23 +36,55 @@ public class MainActivity extends AppCompatActivity
 
         
         lvStore.setAdapter(new StoreAdapter(this, storelist));
-        lvStore.setOnItemClickListener(new AdapterView.OnItemClickListener()
+
+
+        lvStore.setOnItemClickListener(
+                new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
+                Store store = (Store) adapterView.getItemAtPosition(i);
 
+                Intent intent = new Intent(MainActivity.this, ManuActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("ID", store.Id);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
+
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.options_menu, menu);
+        //menu.add("回到首頁");
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.Title:
+                break;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
     }
 
     private class Store
     {
-        int ivImage;
+        int Id,ivImage;
         String Name,Address,Time,Phone;
 
-        public Store(int getImage, String getName, String getAddress, String getTime,String getPhone)
+        public Store(int getId, int getImage, String getName, String getAddress, String getTime,String getPhone)
         {
+            Id = getId;
             ivImage = getImage;
             Name = getName;
             Address = getAddress;
@@ -102,8 +138,6 @@ public class MainActivity extends AppCompatActivity
             return itemView;
         }
 
-
-
         public Object getItem(int Position)
         {
             return Storelist.get(Position);
@@ -119,31 +153,32 @@ public class MainActivity extends AppCompatActivity
     private List getStorelist()
     {
         List<Store> Storelist = new ArrayList<>();
-        int i = 1;
+        int Id = 1;
 
         do
         {
 
             int StoreImageId = getResources().
-                    getIdentifier("store" + i, "drawable", this.getPackageName());
+                    getIdentifier("store" + Id, "drawable", this.getPackageName());
             int StoreNameId = getResources().
-                    getIdentifier("Store_Name" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Name" + Id, "string", this.getPackageName());
             int StoreAddressId = getResources().
-                    getIdentifier("Store_Address" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Address" + Id, "string", this.getPackageName());
             int StoreTimeId = getResources().
-                    getIdentifier("Store_Time" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Time" + Id, "string", this.getPackageName());
             int StorePhoneId = getResources().
-                    getIdentifier("Store_Phone" + i, "string", this.getPackageName());
+                    getIdentifier("Store_Phone" + Id, "string", this.getPackageName());
 
             Storelist.add(new Store(
+                    Id,
                     StoreImageId,
                     getString(StoreNameId),
                     "地址：" + getString(StoreAddressId),
                     "營業時間：" + getString(StoreTimeId),
                     "電話：" + getString(StorePhoneId)));
-            i++;
+            Id++;
 
-        }while(getResources().getIdentifier("store" + i, "drawable", this.getPackageName()) != 0);
+        }while(getResources().getIdentifier("store" + Id, "drawable", this.getPackageName()) != 0);
 
 
         return Storelist;
