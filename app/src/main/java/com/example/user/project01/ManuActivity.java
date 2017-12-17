@@ -1,15 +1,22 @@
 package com.example.user.project01;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,39 +32,83 @@ public class ManuActivity extends AppCompatActivity
 
         ListView lvBento = findViewById(R.id.Bentolist);
         List bentolist = getBentolist();
+        lvBento.setAdapter(new BentoAdapter(this, bentolist));
 
 
-        lvBento.setAdapter(new BentoAdapter(this,bentolist));
 
+
+        lvBento.setOnItemClickListener(
+                new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Bento bento = (Bento)adapterView.getItemAtPosition(i);
+                String Note = bento.Name + "，金額 " + bento.Price + "\n已加入訂單";
+
+                Toast.makeText(ManuActivity.this, Note, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.Home:
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+
+            case R.id.Check_order:
+                break;
+
+            case R.id.Order_data:
+                break;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
     }
 
     private class Bento
     {
         int ivImage;
-        String Name,Price;
+        String Name,Price,Confirm;
 
-        public Bento(int getImage, String getName, String getPrice)
+        public Bento(int getImage, String getName, String getPrice, String getConfirm)
         {
             ivImage = getImage;
             Name = getName;
             Price = getPrice;
+            Confirm = getConfirm;
         }
     }
 
     private class BentoAdapter extends BaseAdapter
     {
         Context context;
-        List Bentolist;
+        List bentolist;
 
-        BentoAdapter(Context context,List Bentolist)
+        BentoAdapter(Context context,List bentolist)
         {
             this.context = context;
-            this.Bentolist = Bentolist;
+            this.bentolist = bentolist;
         }
 
         public int getCount()
         {
-            return Bentolist.size();
+            return bentolist.size();
         }
 
         public View getView(int position, View itemView, ViewGroup parent)
@@ -68,7 +119,7 @@ public class ManuActivity extends AppCompatActivity
                 itemView = layoutInflater.inflate(R.layout.bentolist, parent, false);
             }
 
-            Bento Bento = (ManuActivity.Bento) Bentolist.get(position);
+            Bento Bento = (ManuActivity.Bento) bentolist.get(position);
 
             ImageView ivImage = (ImageView) itemView.findViewById(R.id.BentoImage);
             ivImage.setImageResource(Bento.ivImage);
@@ -79,12 +130,15 @@ public class ManuActivity extends AppCompatActivity
             TextView tvPrice = (TextView) itemView.findViewById(R.id.BentoPrice);
             tvPrice.setText(Bento.Price);
 
+            TextView tvConfirm = (TextView) itemView.findViewById(R.id.Confirm);
+            tvConfirm.setText(Bento.Confirm);
+
             return itemView;
         }
 
         public Object getItem(int Position)
         {
-            return Bentolist.get(Position);
+            return bentolist.get(Position);
         }
         public long getItemId(int Position)
         {
@@ -108,11 +162,14 @@ public class ManuActivity extends AppCompatActivity
                         getIdentifier("Bento" +Id+ "_Name" +i, "string", this.getPackageName());
                 int BentoPriceId = getResources().
                         getIdentifier("Bento" +Id+ "_Price" +i, "string", this.getPackageName());
+                int BentoConfirmId = getResources().
+                        getIdentifier("Bento" +Id+ "_Confirm" +i, "string", this.getPackageName());
 
                 Bentolist.add(new Bento(
                         BentoImageId,
                         getString(BentoNameId),
-                        getString(BentoPriceId) + "元"));
+                        getString(BentoPriceId) + "元",
+                        getString(BentoConfirmId)));
 
                 i++;
 

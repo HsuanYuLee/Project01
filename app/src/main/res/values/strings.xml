@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">訂便當系統</string>
+    <string name="Home">回到首頁</string>
+    <string name="Check_order">確認訂單</string>
+    <string name="Order_data">訂單紀錄</string>
+
 
     <string name="title">請選擇便當店</string>
     <string name="Name">店名</string>

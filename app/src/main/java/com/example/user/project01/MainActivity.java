@@ -15,11 +15,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity
 {
@@ -30,11 +29,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ListView lvStore = findViewById(R.id.StoreList);
         List storelist = getStorelist();
-
-        
         lvStore.setAdapter(new StoreAdapter(this, storelist));
 
 
@@ -44,13 +40,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                Store store = (Store) adapterView.getItemAtPosition(i);
-
+                Store store = (Store)adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(MainActivity.this, ManuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID", store.Id);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
+                //Toast.makeText(MainActivity.this,store.Name,Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -60,7 +57,6 @@ public class MainActivity extends AppCompatActivity
     {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.options_menu, menu);
-        //menu.add("回到首頁");
         return true;
     }
 
@@ -68,7 +64,13 @@ public class MainActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case R.id.Title:
+            case R.id.Home:
+                break;
+
+            case R.id.Check_order:
+                break;
+
+            case R.id.Order_data:
                 break;
 
             default:
@@ -97,17 +99,17 @@ public class MainActivity extends AppCompatActivity
     private class StoreAdapter extends BaseAdapter
     {
         Context context;
-        List Storelist;
+        List storelist;
 
-        StoreAdapter(Context context, List Storelist)
+        StoreAdapter(Context context, List storelist)
         {
             this.context = context;
-            this.Storelist = Storelist;
+            this.storelist = storelist;
         }
 
         public int getCount()
         {
-            return Storelist.size();
+            return storelist.size();
         }
 
         public View getView(int position, View itemView, ViewGroup parent)
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity
                 itemView = layoutInflater.inflate(R.layout.storelist, parent, false);
             }
 
-            Store Store = (MainActivity.Store) Storelist.get(position);
+            Store Store = (MainActivity.Store) storelist.get(position);
 
             ImageView ivImage = (ImageView) itemView.findViewById(R.id.StoreImage);
             ivImage.setImageResource(Store.ivImage);
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity
 
         public Object getItem(int Position)
         {
-            return Storelist.get(Position);
+            return storelist.get(Position);
         }
 
         public long getItemId(int Position)
