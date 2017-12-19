@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/BentoImage"
             android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_height="105dp"
             android:layout_weight="1"
             app:srcCompat="@mipmap/ic_launcher" />
 
@@ -43,12 +43,23 @@
                 style="@style/Style03"
                 android:text="@string/Price" />
 
+            <EditText
+                android:id="@+id/Confirm_number"
+                style="@style/Style03"
+                android:layout_width="100sp"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:layout_gravity="right"
+                android:inputType="number"
+                android:hint="請輸入份數"
+                android:textColorHint="#FFFFFF" />
+
         </LinearLayout>
 
-        <TextView
+        <Button
             android:id="@+id/Confirm"
             android:layout_width="250sp"
-            android:layout_height="100dp"
+            android:layout_height="105dp"
             android:layout_weight="1"
             android:paddingTop="20sp"
             android:paddingBottom="20sp"

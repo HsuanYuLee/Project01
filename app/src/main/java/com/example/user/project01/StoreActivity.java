@@ -15,19 +15,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class StoreActivity extends AppCompatActivity
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_store);
 
         ListView lvStore = findViewById(R.id.StoreList);
         List storelist = getStorelist();
@@ -41,13 +40,13 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Store store = (Store)adapterView.getItemAtPosition(i);
-                Intent intent = new Intent(MainActivity.this, ManuActivity.class);
+                Intent intent = new Intent(StoreActivity.this, ManuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID", store.Id);
                 intent.putExtras(bundle);
                 startActivity(intent);
 
-                //Toast.makeText(MainActivity.this,store.Name,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(StoreActivity.this,store.Name,Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity
                 itemView = layoutInflater.inflate(R.layout.storelist, parent, false);
             }
 
-            Store Store = (MainActivity.Store) storelist.get(position);
+            Store Store = (StoreActivity.Store) storelist.get(position);
 
             ImageView ivImage = (ImageView) itemView.findViewById(R.id.StoreImage);
             ivImage.setImageResource(Store.ivImage);

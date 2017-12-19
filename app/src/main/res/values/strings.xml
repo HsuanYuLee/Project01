@@ -15,6 +15,7 @@
     <string name="BentoName">便當名</string>
     <string name="Price">價格</string>
     <string name="Add">加入訂單</string>
+    <string name="Confirm_number">請輸入要點幾份</string>
     <string name="Check">查看訂單</string>
 
 
