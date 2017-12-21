@@ -58,8 +58,7 @@ public class ManuActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.Home:
-                Intent intent = new Intent(this,StoreActivity.class);
-                startActivity(intent);
+
                 finish();
                 break;
 
