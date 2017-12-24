@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,7 @@ public class StoreActivity extends AppCompatActivity
             case R.id.Home:
                 break;
             case R.id.My_order:
-                //Intent intent = new Intent(StoreActivity.this, OrderActivity.class);
-                //startActivity(intent);
+                Toast.makeText(StoreActivity.this,"尚未建立訂單，請先選擇餐點！",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.Order_data:
                 break;
@@ -67,7 +67,7 @@ public class StoreActivity extends AppCompatActivity
                 Intent intent = new Intent(StoreActivity.this, ManuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID", store.Id);
-                //bundle.putString("PHONE",store.Phone);
+                bundle.putString("PHONE",store.Phone);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

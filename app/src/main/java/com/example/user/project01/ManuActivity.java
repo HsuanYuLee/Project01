@@ -35,8 +35,7 @@ public class ManuActivity extends AppCompatActivity
 {
 
     String Save_Order = "";
-
-    //String Phone = bundle.getString("PHONE");
+    String Trans_Order = "";
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -53,14 +52,19 @@ public class ManuActivity extends AppCompatActivity
                 finish();
                 break;
             case R.id.My_order:
-                Intent intent = new Intent(ManuActivity.this, OrderActivity.class);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("My_Order",Save_Order);
-                //bundle.putString("PHONE",Phone);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
+                if(Trans_Order.isEmpty())
+                {
+                    Toast.makeText(ManuActivity.this,"尚未建立訂單，請先選擇餐點！",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Intent intent = new Intent(ManuActivity.this, OrderActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("My_Order",Trans_Order);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
                 break;
             case R.id.Order_data:
                 break;
@@ -79,7 +83,6 @@ public class ManuActivity extends AppCompatActivity
         final ListView lvBento = findViewById(R.id.Bentolist);
         final List bentolist = getBentolist();
         lvBento.setAdapter(new BentoAdapter(this, bentolist));
-
     }
 
 
@@ -218,6 +221,7 @@ public class ManuActivity extends AppCompatActivity
                 public void onClick(DialogInterface arg0, int arg1)
                 {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
+                    Trans_Order = Save_Order;
                     dialog.setMessage("已將您的訂單建立，可至\n\n我的訂單\n\n內查看");
                     dialog.show();
                 }
@@ -235,7 +239,6 @@ public class ManuActivity extends AppCompatActivity
     {
         Bundle bundle = getIntent().getExtras();
         int Id = bundle.getInt("ID");
-
 
         List<Bento> Bentolist = new ArrayList<>();
         int i = 1;

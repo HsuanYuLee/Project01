@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class OrderActivity extends AppCompatActivity
 {
-    /*
+
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
@@ -43,43 +43,16 @@ public class OrderActivity extends AppCompatActivity
         return true;
     }
 
-    Bundle bundle = getIntent().getExtras();
-    TextView Order = findViewById(R.id.Show_Order);
-    Button Call_Phone = findViewById(R.id.Call);
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        /*
+        Bundle bundle = getIntent().getExtras();
+        TextView Order = findViewById(R.id.Show_Order);
 
-        if(bundle != null)
-        {
-            Order.setText(bundle.getString("My_Order"));
-            Call_Phone.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    Intent Call = new Intent(Intent.ACTION_CALL);
-                    Call.setData(Uri.parse("tel:" + bundle.getString("PHONE").trim()));
-                }
-            });
-        }
-        else
-        {
-            Order.setText("尚未加入訂單");
-            Call_Phone.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    Toast.makeText(OrderActivity.this,"尚未選擇店家",Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+        Order.setText(bundle.getString("My_Order"));
 
-    }*/
+    }
 }
