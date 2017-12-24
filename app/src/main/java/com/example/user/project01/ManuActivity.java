@@ -34,17 +34,9 @@ import java.util.List;
 public class ManuActivity extends AppCompatActivity
 {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manu);
+    String Save_Order = "";
 
-        ListView lvBento = findViewById(R.id.Bentolist);
-        List bentolist = getBentolist();
-        lvBento.setAdapter(new BentoAdapter(this, bentolist));
-
-    }
+    //String Phone = bundle.getString("PHONE");
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -58,21 +50,38 @@ public class ManuActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.Home:
-
                 finish();
                 break;
+            case R.id.My_order:
+                Intent intent = new Intent(ManuActivity.this, OrderActivity.class);
 
-            case R.id.Check_order:
+                Bundle bundle = new Bundle();
+                bundle.putString("My_Order",Save_Order);
+                //bundle.putString("PHONE",Phone);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
                 break;
-
             case R.id.Order_data:
                 break;
-
             default:
                 return super.onContextItemSelected(item);
         }
         return true;
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manu);
+
+        final ListView lvBento = findViewById(R.id.Bentolist);
+        final List bentolist = getBentolist();
+        lvBento.setAdapter(new BentoAdapter(this, bentolist));
+
+    }
+
 
     private class Bento
     {
@@ -117,72 +126,62 @@ public class ManuActivity extends AppCompatActivity
 
             final Bento Bento = (ManuActivity.Bento) bentolist.get(position);
 
-            ImageView ivImage = (ImageView) itemView.findViewById(R.id.BentoImage);
+            ImageView ivImage = itemView.findViewById(R.id.BentoImage);
             ivImage.setImageResource(Bento.ivImage);
 
-            TextView tvName = (TextView) itemView.findViewById(R.id.BentoName);
+            TextView tvName = itemView.findViewById(R.id.BentoName);
             tvName.setText(Bento.Name);
 
-            TextView tvPrice = (TextView) itemView.findViewById(R.id.BentoPrice);
+            TextView tvPrice = itemView.findViewById(R.id.BentoPrice);
             tvPrice.setText(Bento.Price);
 
             final EditText tvConfirm_number = itemView.findViewById(R.id.Confirm_number);
             tvConfirm_number.setText(null);
 
-            Button tvConfirm = (Button) itemView.findViewById(R.id.Confirm);
+            Button tvConfirm = itemView.findViewById(R.id.Confirm);
             tvConfirm.setText(Bento.Confirm);
             tvConfirm.setTag(position);
 
             tvConfirm.setOnClickListener(new View.OnClickListener()
             {
-                //private final static String Tag = "ManuActivity";
-                //private final static String Order_data = "Order_data.txt";
                 @Override
                 public void onClick(View view)
                 {
-
-                    /*
                     String num = tvConfirm_number.getText().toString();
-                    String Note = Bento.Name +" "+ num + " 份已加入訂單";
-                    BufferedWriter Order_bw = null;
-                    try
+                    final String Note = Bento.Name +" "+ num + " 份";
+
+                    if(num.isEmpty())
                     {
-                        FileOutputStream Order = openFileOutput(Order_data, MODE_PRIVATE);
-                        Order_bw = new BufferedWriter(new OutputStreamWriter(Order));
-                        Order_bw.write(Bento.Name +" "+ num + " 份");
+                        Toast.makeText(ManuActivity.this, "尚未選擇餐點！",Toast.LENGTH_SHORT).show();
                     }
-                    catch (IOException e)
+                    else
                     {
-                        Log.e(Tag,e.toString());
-                    }
-                    finally
-                    {
-                        try
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
+                        dialog.setTitle("加入餐點");
+                        dialog.setMessage("您要加入的餐點是：\n" +Note);
+                        dialog.setNegativeButton("取消",new DialogInterface.OnClickListener()
                         {
-                            if(Order_bw != null)
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1)
                             {
-                                Order_bw.close();
+                                Toast.makeText(ManuActivity.this, "已取消",Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        catch (IOException e)
+                        });
+                        dialog.setPositiveButton("加入訂單",new DialogInterface.OnClickListener()
                         {
-                            Log.e(Tag,e.toString());
-                        }
-
-                        Toast.makeText(ManuActivity.this, Order_data, Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1)
+                            {
+                                Toast.makeText(ManuActivity.this, Note + "已加入訂單",Toast.LENGTH_SHORT).show();
+                                Save_Order += Note + "\n";
+                            }
+                        });
+                        dialog.show();
                     }
-                    */
-
-                    String num = tvConfirm_number.getText().toString();
-                    String Note = Bento.Name +" "+ num + " 份已加入訂單";
-                    Toast.makeText(ManuActivity.this, Note, Toast.LENGTH_SHORT).show();
                 }
-
             });
-
             return itemView;
         }
-
         public Object getItem(int Position)
         {
             return bentolist.get(Position);
@@ -193,10 +192,50 @@ public class ManuActivity extends AppCompatActivity
         }
     }
 
+    public void Save_Order(View view)
+    {
+        if(Save_Order.isEmpty())
+        {
+            Toast.makeText(ManuActivity.this, "尚未選擇餐點！",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
+            dialog.setTitle("訂單確認");
+            dialog.setMessage("經過統計，您選擇的餐點總共是：\n" + Save_Order);
+            dialog.setNegativeButton("清除訂單，重新選擇", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1)
+                {
+                    Save_Order = "";
+                    Toast.makeText(ManuActivity.this, "已清除", Toast.LENGTH_SHORT).show();
+                }
+            });
+            dialog.setPositiveButton("建立訂單", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1)
+                {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
+                    dialog.setMessage("已將您的訂單建立，可至\n\n我的訂單\n\n內查看");
+                    dialog.show();
+                }
+            });
+            dialog.setNeutralButton("繼續點餐", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1){}
+            });
+            dialog.show();
+        }
+    }
+
     private List getBentolist()
     {
         Bundle bundle = getIntent().getExtras();
         int Id = bundle.getInt("ID");
+
 
         List<Bento> Bentolist = new ArrayList<>();
         int i = 1;
@@ -220,9 +259,7 @@ public class ManuActivity extends AppCompatActivity
                         getString(BentoPriceId) + "元",
                         getString(BentoConfirm_numberId),
                         getString(BentoConfirmId)));
-
                 i++;
-
             }while(getResources().getIdentifier("store" +Id+ "_manu" +i, "drawable", this.getPackageName()) != 0);
 
         return Bentolist;

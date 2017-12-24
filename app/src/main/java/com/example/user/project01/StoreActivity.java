@@ -21,6 +21,30 @@ import java.util.List;
 
 public class StoreActivity extends AppCompatActivity
 {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.Home:
+                break;
+            case R.id.My_order:
+                //Intent intent = new Intent(StoreActivity.this, OrderActivity.class);
+                //startActivity(intent);
+                break;
+            case R.id.Order_data:
+                break;
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,40 +67,14 @@ public class StoreActivity extends AppCompatActivity
                 Intent intent = new Intent(StoreActivity.this, ManuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID", store.Id);
+                //bundle.putString("PHONE",store.Phone);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
-                //Toast.makeText(StoreActivity.this,store.Name,Toast.LENGTH_SHORT).show();
             }
 
         });
     }
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.options_menu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.Home:
-                break;
-
-            case R.id.Check_order:
-                break;
-
-            case R.id.Order_data:
-                break;
-
-            default:
-                return super.onContextItemSelected(item);
-        }
-        return true;
-    }
 
     private class Store
     {

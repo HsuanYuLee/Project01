@@ -6,8 +6,8 @@
         android:title="@string/Home" />
 
     <item
-        android:id="@+id/Check_order"
-        android:title="@string/Check_order" />
+        android:id="@+id/My_order"
+        android:title="@string/My_order" />
 
     <item
         android:id="@+id/Order_data"
