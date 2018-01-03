@@ -61,13 +61,13 @@
             android:layout_width="250sp"
             android:layout_height="105dp"
             android:layout_weight="1"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp"
-            android:paddingLeft="10sp"
-            android:paddingRight="10sp"
+            android:paddingTop="5sp"
+            android:paddingBottom="15sp"
+            android:paddingLeft="7sp"
+            android:paddingRight="7sp"
             android:background="#FFFF00"
             android:text="@string/Add"
-            android:textSize="23sp"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="0dp" />
 

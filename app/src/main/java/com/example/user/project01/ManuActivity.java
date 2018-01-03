@@ -36,6 +36,8 @@ public class ManuActivity extends AppCompatActivity
 
     String Save_Order = "";
     String Trans_Order = "";
+    final List<Order> Orderlist = new ArrayList<>();
+
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -101,6 +103,22 @@ public class ManuActivity extends AppCompatActivity
         }
     }
 
+    private class Order
+    {
+        int ivImage;
+        String Name,Price,Number;
+
+        public Order(int getImage, String getName, String getPrice,String getNumber)
+        {
+            ivImage = getImage;
+            Name = getName;
+            Price = getPrice;
+            Number = getNumber;
+        }
+    }
+
+
+
     private class BentoAdapter extends BaseAdapter
     {
         Context context;
@@ -150,18 +168,42 @@ public class ManuActivity extends AppCompatActivity
                 @Override
                 public void onClick(View view)
                 {
-                    String num = tvConfirm_number.getText().toString();
-                    final String Note = Bento.Name +" "+ num + " 份";
+                    Bundle bundle = getIntent().getExtras();
+                    int Id = bundle.getInt("ID");
 
-                    if(num.isEmpty())
+                    final int OrderImageId = getResources().
+                            getIdentifier("store" +Id+ "_manu" + (position+1), "drawable", getPackageName());
+                    final int OrderNameId = getResources().
+                            getIdentifier("Bento" +Id+ "_Name" + (position+1), "string", getPackageName());
+                    final int OrderPriceId = getResources().
+                            getIdentifier("Bento" +Id+ "_Price" + (position+1), "string", getPackageName());
+                    final String OrderNum = tvConfirm_number.getText().toString();
+
+
+                    if(OrderNum.isEmpty())
                     {
                         Toast.makeText(ManuActivity.this, "尚未選擇餐點！",Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
+                        Order order = new Order(OrderImageId,getString(OrderNameId),getString(OrderPriceId),OrderNum);
+                        int OrderId = order.ivImage;
+
+                        if(Orderlist.contains(order))
+                        {
+                            Toast.makeText(ManuActivity.this,"購物車已有",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Orderlist.add(order);
+                            Toast.makeText(ManuActivity.this, getString(OrderNameId) + OrderNum + "份已加入購物車",Toast.LENGTH_SHORT).show();
+                        }
+
+                        /*
+
                         AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
                         dialog.setTitle("加入餐點");
-                        dialog.setMessage("您要加入的餐點是：\n" +Note);
+                        dialog.setMessage("您要加入的餐點是：\n" + getString(OrderNameId) + OrderNum + "份");
                         dialog.setNegativeButton("取消",new DialogInterface.OnClickListener()
                         {
                             @Override
@@ -180,6 +222,8 @@ public class ManuActivity extends AppCompatActivity
                             }
                         });
                         dialog.show();
+                        */
+
                     }
                 }
             });
@@ -246,15 +290,15 @@ public class ManuActivity extends AppCompatActivity
         do
             {
                 int BentoImageId = getResources().
-                        getIdentifier("store" +Id+ "_manu" +i, "drawable", this.getPackageName());
+                        getIdentifier("store" +Id+ "_manu" +i, "drawable", getPackageName());
                 int BentoNameId = getResources().
-                        getIdentifier("Bento" +Id+ "_Name" +i, "string", this.getPackageName());
+                        getIdentifier("Bento" +Id+ "_Name" +i, "string", getPackageName());
                 int BentoPriceId = getResources().
-                        getIdentifier("Bento" +Id+ "_Price" +i, "string", this.getPackageName());
+                        getIdentifier("Bento" +Id+ "_Price" +i, "string", getPackageName());
                 int BentoConfirm_numberId = getResources().
-                        getIdentifier("Confirm_number", "string", this.getPackageName());
+                        getIdentifier("Confirm_number", "string", getPackageName());
                 int BentoConfirmId = getResources().
-                        getIdentifier("Add", "string", this.getPackageName());
+                        getIdentifier("Add", "string", getPackageName());
 
                 Bentolist.add(new Bento(
                         BentoImageId,
