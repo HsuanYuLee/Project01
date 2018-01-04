@@ -36,7 +36,8 @@ public class ManuActivity extends AppCompatActivity
 
     String Save_Order = "";
     String Trans_Order = "";
-    final List<Order> Orderlist = new ArrayList<>();
+    List<Order> Orderlist = new ArrayList<>();
+
 
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -87,7 +88,6 @@ public class ManuActivity extends AppCompatActivity
         lvBento.setAdapter(new BentoAdapter(this, bentolist));
     }
 
-
     private class Bento
     {
         int ivImage;
@@ -116,8 +116,6 @@ public class ManuActivity extends AppCompatActivity
             Number = getNumber;
         }
     }
-
-
 
     private class BentoAdapter extends BaseAdapter
     {
@@ -186,17 +184,24 @@ public class ManuActivity extends AppCompatActivity
                     }
                     else
                     {
+                        int X = 0;
                         Order order = new Order(OrderImageId,getString(OrderNameId),getString(OrderPriceId),OrderNum);
-                        int OrderId = order.ivImage;
 
-                        if(Orderlist.contains(order))
+                        for(Order A: Orderlist)
                         {
-                            Toast.makeText(ManuActivity.this,"購物車已有",Toast.LENGTH_SHORT).show();
+                            if(A.Name.equals(order.Name))
+                            {
+                                Toast.makeText(ManuActivity.this, "已選過餐點,是否更改份數?", Toast.LENGTH_SHORT).show();
+                            }else
+                            {
+                                X++;
+                            }
                         }
-                        else
+
+                        if(X == Orderlist.size())
                         {
                             Orderlist.add(order);
-                            Toast.makeText(ManuActivity.this, getString(OrderNameId) + OrderNum + "份已加入購物車",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ManuActivity.this, order.Name + order.Number + "份已加入購物車", Toast.LENGTH_SHORT).show();
                         }
 
                         /*
