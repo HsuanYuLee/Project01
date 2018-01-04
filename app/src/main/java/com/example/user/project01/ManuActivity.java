@@ -177,7 +177,6 @@ public class ManuActivity extends AppCompatActivity
                             getIdentifier("Bento" +Id+ "_Price" + (position+1), "string", getPackageName());
                     final String OrderNum = tvConfirm_number.getText().toString();
 
-
                     if(OrderNum.isEmpty())
                     {
                         Toast.makeText(ManuActivity.this, "尚未選擇餐點！",Toast.LENGTH_SHORT).show();
@@ -185,13 +184,30 @@ public class ManuActivity extends AppCompatActivity
                     else
                     {
                         int X = 0;
-                        Order order = new Order(OrderImageId,getString(OrderNameId),getString(OrderPriceId),OrderNum);
+                        final Order order = new Order(OrderImageId,getString(OrderNameId),getString(OrderPriceId),OrderNum);
 
-                        for(Order A: Orderlist)
+                        for(final Order A: Orderlist)
                         {
                             if(A.Name.equals(order.Name))
                             {
-                                Toast.makeText(ManuActivity.this, "已選過餐點,是否更改份數?", Toast.LENGTH_SHORT).show();
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
+                                dialog.setMessage("已選過餐點,目前為"+A.Number+"份,是否更改為" + OrderNum + "份?");
+                                dialog.setNegativeButton("否",new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1){}
+                                });
+                                dialog.setPositiveButton("是",new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1)
+                                    {
+                                        Orderlist.remove(A);
+                                        Orderlist.add(order);
+                                        Toast.makeText(ManuActivity.this, "更改完畢!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                dialog.show();
                             }else
                             {
                                 X++;
@@ -203,32 +219,6 @@ public class ManuActivity extends AppCompatActivity
                             Orderlist.add(order);
                             Toast.makeText(ManuActivity.this, order.Name + order.Number + "份已加入購物車", Toast.LENGTH_SHORT).show();
                         }
-
-                        /*
-
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(ManuActivity.this);
-                        dialog.setTitle("加入餐點");
-                        dialog.setMessage("您要加入的餐點是：\n" + getString(OrderNameId) + OrderNum + "份");
-                        dialog.setNegativeButton("取消",new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1)
-                            {
-                                Toast.makeText(ManuActivity.this, "已取消",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        dialog.setPositiveButton("加入訂單",new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1)
-                            {
-                                Toast.makeText(ManuActivity.this, Note + "已加入訂單",Toast.LENGTH_SHORT).show();
-                                Save_Order += Note + "\n";
-                            }
-                        });
-                        dialog.show();
-                        */
-
                     }
                 }
             });
