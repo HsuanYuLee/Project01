@@ -2,6 +2,7 @@ package com.example.user.project01;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuView;
@@ -14,9 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderActivity extends AppCompatActivity
 {
-
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
@@ -35,8 +38,6 @@ public class OrderActivity extends AppCompatActivity
                 break;
             case R.id.My_order:
                 break;
-            case R.id.Order_data:
-                break;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -50,9 +51,36 @@ public class OrderActivity extends AppCompatActivity
         setContentView(R.layout.activity_order);
 
         Bundle bundle = getIntent().getExtras();
+        int BentoNum = 0;
+        if (bundle != null)
+        {
+            BentoNum = bundle.getInt("BentoNum");
+        }
+
+        String order = null;
+
         TextView Order = findViewById(R.id.Show_Order);
 
-        Order.setText(bundle.getString("My_Order"));
+        for(int i=0;i<BentoNum;i++)
+        {
+
+            int Price = Integer.valueOf(bundle.getString("Price"+i));
+            int Num = Integer.valueOf(bundle.getString("Num"+i));
+
+            order = order
+                    + bundle.getString("Name"+i)
+                    + " "
+                    + bundle.getString("Num"+i)
+                    + " "
+                    + "份,共"
+                    + (Price*Num)
+                    + " 元\n";
+        }
+        Order.setText("order");
+
 
     }
+
+
+
 }

@@ -3,18 +3,15 @@ package com.example.user.project01;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,11 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +29,7 @@ public class ManuActivity extends AppCompatActivity
 
     String Save_Order = "";
     String Trans_Order = "";
-    List<Order> Orderlist = new ArrayList<>();
-
-
+    ArrayList<Order> Orderlist = new ArrayList<>();
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -56,7 +47,7 @@ public class ManuActivity extends AppCompatActivity
                 break;
             case R.id.My_order:
 
-                if(Trans_Order.isEmpty())
+                if(Orderlist.isEmpty())
                 {
                     Toast.makeText(ManuActivity.this,"尚未建立訂單，請先選擇餐點！",Toast.LENGTH_SHORT).show();
                 }
@@ -64,12 +55,21 @@ public class ManuActivity extends AppCompatActivity
                 {
                     Intent intent = new Intent(ManuActivity.this, OrderActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("My_Order",Trans_Order);
-                    intent.putExtras(bundle);
+
+                    int i = 0;
+                    for(Order order: Orderlist)
+                    {
+                        bundle.putString("Name"+i,order.Name);
+                        bundle.putString("Price"+i,order.Price);
+                        bundle.putString("Num"+i,order.Number);
+                        intent.putExtras(bundle);
+
+                        i++;
+                    }
+                    bundle.putInt("BentoNum",i);
+
                     startActivity(intent);
                 }
-                break;
-            case R.id.Order_data:
                 break;
             default:
                 return super.onContextItemSelected(item);
@@ -93,7 +93,7 @@ public class ManuActivity extends AppCompatActivity
         int ivImage;
         String Name,Price,Confirm_number,Confirm;
 
-        public Bento(int getImage, String getName, String getPrice,String getConfirm_number, String getConfirm)
+        Bento(int getImage, String getName, String getPrice, String getConfirm_number, String getConfirm)
         {
             ivImage = getImage;
             Name = getName;
@@ -108,7 +108,7 @@ public class ManuActivity extends AppCompatActivity
         int ivImage;
         String Name,Price,Number;
 
-        public Order(int getImage, String getName, String getPrice,String getNumber)
+        Order(int getImage, String getName, String getPrice, String getNumber)
         {
             ivImage = getImage;
             Name = getName;
@@ -167,7 +167,8 @@ public class ManuActivity extends AppCompatActivity
                 public void onClick(View view)
                 {
                     Bundle bundle = getIntent().getExtras();
-                    int Id = bundle.getInt("ID");
+                    int Id = 0;
+                    if (bundle != null) {Id = bundle.getInt("ID");}
 
                     final int OrderImageId = getResources().
                             getIdentifier("store" +Id+ "_manu" + (position+1), "drawable", getPackageName());
@@ -277,7 +278,8 @@ public class ManuActivity extends AppCompatActivity
     private List getBentolist()
     {
         Bundle bundle = getIntent().getExtras();
-        int Id = bundle.getInt("ID");
+        int Id = 0;
+        if (bundle != null) {Id = bundle.getInt("ID");}
 
         List<Bento> Bentolist = new ArrayList<>();
         int i = 1;

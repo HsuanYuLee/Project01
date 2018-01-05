@@ -38,8 +38,6 @@ public class StoreActivity extends AppCompatActivity
             case R.id.My_order:
                 Toast.makeText(StoreActivity.this,"尚未建立訂單，請先選擇餐點！",Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.Order_data:
-                break;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -81,7 +79,7 @@ public class StoreActivity extends AppCompatActivity
         int Id,ivImage;
         String Name,Address,Time,Phone;
 
-        public Store(int getId, int getImage, String getName, String getAddress, String getTime,String getPhone)
+        Store(int getId, int getImage, String getName, String getAddress, String getTime, String getPhone)
         {
             Id = getId;
             ivImage = getImage;
@@ -119,19 +117,19 @@ public class StoreActivity extends AppCompatActivity
 
             Store Store = (StoreActivity.Store) storelist.get(position);
 
-            ImageView ivImage = (ImageView) itemView.findViewById(R.id.StoreImage);
+            ImageView ivImage = itemView.findViewById(R.id.StoreImage);
             ivImage.setImageResource(Store.ivImage);
 
-            TextView tvName = (TextView) itemView.findViewById(R.id.Name);
+            TextView tvName = itemView.findViewById(R.id.Name);
             tvName.setText(Store.Name);
 
-            TextView tvTime = (TextView) itemView.findViewById(R.id.Time);
+            TextView tvTime = itemView.findViewById(R.id.Time);
             tvTime.setText(Store.Time);
 
-            TextView tvAddress = (TextView) itemView.findViewById(R.id.Address);
+            TextView tvAddress = itemView.findViewById(R.id.Address);
             tvAddress.setText(Store.Address);
 
-            TextView tvPhone = (TextView) itemView.findViewById(R.id.Phone);
+            TextView tvPhone = itemView.findViewById(R.id.Phone);
             tvPhone.setText(Store.Phone);
 
             return itemView;
